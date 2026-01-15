@@ -147,4 +147,37 @@ class LinkedList:
         return True
 
 
+    def find_middle_node(self):
 
+        if self.head is None:
+            return None
+        
+        slow = self.head
+        fast = self.head
+
+        while fast.next is not None:
+            slow = slow.next
+            fast = fast.next
+
+            if fast.next is not None:
+                fast = fast.next
+
+        return slow
+
+    def find_middle_node_canon(self):
+        slow = self.head
+        fast = self.head
+
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow
+
+l = LinkedList(0)
+
+
+
+
+
+print(l.find_middle_node())

@@ -148,3 +148,32 @@ class LinkedList:
 
 
 
+
+
+
+def find_kth_node_from_end(ll, index):
+    slow = ll.head
+    fast = ll.head
+
+    if index < 1:
+        return None
+
+    for _ in range(index):
+        if fast is None:
+            return None
+        fast = fast.next
+
+    while fast is not None:
+        slow = slow.next
+        fast = fast.next
+
+    return slow
+
+
+ll = LinkedList(1)
+ll.append(2)
+ll.append(3)
+ll.append(4)
+ll.append(5)
+
+print(find_kth_node_from_end(ll, 5))
