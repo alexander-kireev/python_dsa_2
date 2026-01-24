@@ -1,0 +1,199 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+class LinkedList:
+    def __init__(self, value):
+        self.head = Node(value)
+        self.tail = self.head
+        self.length = 1
+
+    def print_list(self):
+        temp = self.head
+        while temp is not None:
+            print(temp.value)
+            temp = temp.next
+
+    def append(self, value):
+        new_node = Node(value)
+        if self.length == 0:
+            self.head = new_node
+        else:
+            self.tail.next = new_node
+        self.tail = new_node
+        self.length += 1
+
+    def pop(self):
+        if self.length == 0:
+            return None
+        
+        cur = self.head
+        pre = self.head
+
+        while cur.next is not None:
+            pre = cur
+            cur = cur.next
+
+        self.tail = pre
+        self.tail.next = None
+        self.length -= 1
+
+        if self.length == 0:
+            self.head = None
+            self.tail = None
+
+        return cur
+        
+    
+    def prepend(self, value):
+        new_node = Node(value)
+
+        if self.length == 0:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head = new_node
+        
+        self.length += 1
+        return True
+        
+    def pop_first(self):
+        if self.length == 0:
+            return None
+        
+        node = self.head
+
+        if self.length == 1:
+            self.head = None
+            self.tail = None
+        else:
+            self.head = self.head.next
+
+        node.next = None
+        self.length -= 1
+        return node
+    
+    def get(self, index):
+        if self.length <= index or self.length == 0 or index < 0:
+            return None
+        
+        cur = self.head
+        position = 0
+
+        while position < index:
+            cur = cur.next
+            position += 1
+        
+        return cur
+
+    def insert(self, index, value):
+        if index < 0 or index > self.length:
+            return False
+
+        if index == 0:
+            self.prepend(value)
+        elif index == self.length:
+            self.append(value)  
+        else:
+            prev_node = self.get(index - 1)
+            new_node = Node(value)
+            new_node.next = prev_node.next
+            prev_node.next = new_node
+            self.length += 1
+        
+        return True
+
+    def set(self, index, value):     
+        current_node = self.get(index)
+        if current_node is not None:
+            current_node.value = value
+            return True
+        
+        return False
+    
+
+    def remove(self, index):
+        if index < 0 or index >= self.length:
+            return None
+        elif index == 0:
+            return self.pop_first()
+        elif index == self.length - 1:
+            return self.pop()
+        else:
+            prev_node = self.get(index - 1)
+            removed_node = prev_node.next
+            prev_node.next = removed_node.next
+            removed_node.next = None
+            self.length -= 1
+            return removed_node
+
+    def reverse(self):
+        if self.length < 2:
+            return True
+        
+        prev = None
+        cur = self.head
+        self.tail = self.head
+
+        while cur is not None:
+            next_node = cur.next
+            cur.next = prev
+            prev = cur
+            cur = next_node
+
+        self.head = prev
+        return True
+
+
+
+    def partition_list(self, x):
+        left_tail = Node(None)
+        left_head = left_tail
+
+        right_tail = Node(None)
+        right_head = right_tail
+
+        cur = self.head
+
+        if cur is None:
+            return
+        
+        while cur is not None:
+            next_node = cur.next
+            cur.next = None
+
+            if cur.value < x:        
+                left_tail.next = cur
+                left_tail = cur
+            else:
+                right_tail.next = cur
+                right_tail = cur
+
+            cur = next_node
+        
+        left_tail.next = right_head.next
+        self.head = left_head.next
+
+        if right_head.next is None:
+            self.tail = left_tail
+        else:
+            self.tail = right_tail
+        
+
+
+l = LinkedList(3)
+
+l.append(8)
+l.append(5)
+
+l.append(10)
+l.append(2)
+l.append(1)
+
+
+
+l.partition_list(5)
+
+l.print_list()
