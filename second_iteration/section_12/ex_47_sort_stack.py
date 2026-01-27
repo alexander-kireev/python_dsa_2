@@ -27,7 +27,7 @@ class Stack:
         temp = self.top
         self.top = self.top.next
         self.height -= 1
-        return temp.value
+        return temp
     
     def print_stack(self):
         cur = self.top
@@ -38,36 +38,3 @@ class Stack:
         
     def is_empty(self):
         return self.height == 0
-    
-
-
-def sort_stack(stack):
-    s1 = stack
-    s2 = Stack()
-
-    while not s1.is_empty():
-        cur = s1.pop()
-
-        if s2.is_empty():
-            s2.push(cur)
-        else:
-            if cur > s2.top.value:
-                temp = cur
-                s1.push(s2.pop())
-                s1.push(temp)
-            else:
-                s2.push(cur)
-                
-    return s2
-    
-og = Stack(0)
-og.push(1)
-og.push(4)
-og.push(3)
-og.push(9)
-og.push(2)
-og.push(11)
-
-s2 = sort_stack(og)
-
-s2.print_stack()
