@@ -1,0 +1,22 @@
+def find_longest_string(words):
+    max_len = 0
+    max_word = ""
+
+    for word in words:
+        if len(word) > max_len:
+            max_len = len(word)
+            max_word = word
+    
+    return max_word
+
+string_list = ['apple', 'banana', 'kiwi', 'pear']
+longest = find_longest_string(string_list)
+print(longest)  
+
+
+"""
+    EXPECTED OUTPUT:
+    ----------------
+    banana
+    
+"""
