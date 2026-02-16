@@ -1,5 +1,5 @@
-w = "hello"
+nums = [1]
 
-w ="".join(sorted(w))
+for i in range(1, len(nums)):
+    print(i)
 
-print(w)
